@@ -1,0 +1,91 @@
+version: '2'
+
+services:
+
+  elasticsearch:
+    build:
+      context: elasticsearch/
+    container_name: elasticsearch
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ELASTIC_PASSWORD: "123456"
+    networks:
+      - elk
+
+  logstash:
+    build:
+      context: logstash/
+    container_name: logstash
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/config/pipeline.yml:/usr/share/logstash/config/pipeline.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+      - /private/var/log:/hostlog:ro
+    ports:
+      - "5000:5000"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    group_add:
+      - root
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build:
+      context: kibana/
+    container_name: kibana
+    volumes:
+      - ./kibana/config/:/usr/share/kibana/config:ro
+    ports:
+      - "5601:5601"
+    networks:
+      - elk
+    depends_on:
+      - elasticsearch
+
+  metricbeat:
+    build:
+      context: metricbeat/
+    container_name: metricbeat
+    volumes:
+      - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metribeat.yml:ro
+      - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    group_add:
+      - daemon
+    networks: 
+      - host
+      - elk
+    depends_on:
+      - elasticsearch
+  
+  nginx:
+    image: nginx:alpine
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - elk
+
+
+volumes:
+  esdata:
+    driver: local
+
+networks:
+  host:
+    external: true
+  elk:
+    external: true
