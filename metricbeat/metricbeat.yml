@@ -64,7 +64,7 @@ setup.kibana:
   # Scheme and port can be left out and will be set to the default (http and 5601)
   # In case you specify and additional path, the scheme is required: http://localhost:5601/path
   # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
-  host: "http://kibana:5601"
+  host: "http://172.25.0.4:5601"
 
 #============================= Elastic Cloud ==================================
 
@@ -86,7 +86,7 @@ setup.kibana:
 #-------------------------- Elasticsearch output ------------------------------
 output.elasticsearch:
   # Array of hosts to connect to.
-  hosts: ["http://elasticsearch:9200"]
+  hosts: ["http://172.25.0.2:9200"]
 
   # Optional protocol and basic auth credentials.
   #protocol: "https"

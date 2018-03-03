@@ -16,7 +16,8 @@ services:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
       ELASTIC_PASSWORD: "123456"
     networks:
-      - elk
+      elk:
+        ipv4_address: 172.25.0.2
 
   logstash:
     build:
@@ -31,10 +32,12 @@ services:
       - "5000:5000"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    # 加入root组才能读取系统日志
     group_add:
       - root
     networks:
-      - elk
+      elk:
+        ipv4_address: 172.25.0.3
     depends_on:
       - elasticsearch
 
@@ -47,7 +50,8 @@ services:
     ports:
       - "5601:5601"
     networks:
-      - elk
+      elk:
+        ipv4_address: 172.25.0.4
     depends_on:
       - elasticsearch
 
@@ -56,19 +60,19 @@ services:
       context: metricbeat/
     container_name: metricbeat
     volumes:
-      - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metribeat.yml:ro
+      - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
       - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    # 加入root组才能访问日志
     group_add:
-      - daemon
-    networks: 
-      - host
-      - elk
+      - root
+    network_mode: host
     depends_on:
       - elasticsearch
   
   nginx:
-    image: nginx:alpine
+    build:
+      context: nginx/
     container_name: nginx
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
@@ -77,7 +81,10 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - elk
+      elk:
+        ipv4_address: 172.25.0.5
+    depends_on:
+      - kibana
 
 
 volumes:
@@ -85,7 +92,8 @@ volumes:
     driver: local
 
 networks:
-  host:
-    external: true
   elk:
-    external: true
+    driver: bridge
+    ipam:
+      config:
+       - subnet: 172.25.0.0/16
