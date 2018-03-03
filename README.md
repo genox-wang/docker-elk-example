@@ -75,3 +75,20 @@ $ pwd
 #### 初始账户
 
 > 初始账号 elastic 密码 123456 修改密码在 `docker-compose.yml` 里修改 `ELASTIC_PASSWORD: 123456`， 其他账号密码可在 kibana 里修改
+
+### 进度
+
+- build-compose快速部署
+- 支持[DaoCloud Stack](http://guide.daocloud.io/dcs/%E9%83%A8%E7%BD%B2%E5%A4%8D%E6%9D%82%E7%9A%84%E5%A4%9A%E8%8A%82%E7%82%B9%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%BA%94%E7%94%A8-9153682.html)自动化部署
+- Metricbeat System 监听
+- Metricbeat Docker 监听
+- Metricbeat Nginx 监听
+
+### TODO
+
+- Metricbeat Mysql 监听
+- Metricbeat NodeJs 监听
+- Metricbeat Golang 监听
+- Metricbeat Kubernetes 监听
+- X-pack 权限解析
+- ELK 集群
