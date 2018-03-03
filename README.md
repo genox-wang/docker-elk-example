@@ -2,12 +2,16 @@
 
 ### Introduction
 
+### Prepare
+
+ - [docker-compose](https://docs.docker.com/compose/install/#install-compose)
+
 ### Install
 
-#### Add network for docker
+#### Add `elk` network for docker
 
 ```
-$ docker network -d bridge elk
+$ docker network create elk
 ```
 
 ### Build
