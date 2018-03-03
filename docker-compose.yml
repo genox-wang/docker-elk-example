@@ -63,6 +63,9 @@ services:
       - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
       - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc:/hostfs/proc:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /:/hostfs:ro 
     # 加入root组才能访问日志
     user: "root"
     network_mode: host
@@ -70,6 +73,7 @@ services:
       - elasticsearch
       - kibana
       - logstash
+    command: "-system.hostfs=/hostfs"
   
   nginx:
     build:
