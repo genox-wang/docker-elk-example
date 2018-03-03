@@ -64,11 +64,12 @@ services:
       - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
     # 加入root组才能访问日志
-    group_add:
-      - root
+    user: "root"
     network_mode: host
     depends_on:
       - elasticsearch
+      - kibana
+      - logstash
   
   nginx:
     build:
