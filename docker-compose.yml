@@ -89,9 +89,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    networks:
-      elk:
-        ipv4_address: 172.25.0.5
+    network_mode: host
     depends_on:
       - kibana
     restart: always
