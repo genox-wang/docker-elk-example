@@ -33,9 +33,7 @@ services:
       - "5000:5000"
     environment:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    # 加入root组才能读取系统日志
-    group_add:
-      - root
+    user: "root"
     networks:
       elk:
         ipv4_address: 172.25.0.3
@@ -69,7 +67,6 @@ services:
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
       - /:/hostfs:ro 
-    # 加入root组才能访问日志
     user: "root"
     network_mode: host
     depends_on:
