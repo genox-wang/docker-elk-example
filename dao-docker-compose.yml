@@ -86,8 +86,41 @@ services:
     - kibana
     restart: always
 
+  mysql:
+    image: daocloud.io/genius0215/mariadb
+    container_name: mysql
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - /root/app/docker-elk/conf.d:/etc/mysql/conf.d:ro
+    ports:
+      - "3306:3306"
+    networks:
+      elk:
+        ipv4_address: 172.25.0.6
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+
+  redis:
+    image: daocloud.io/genius0215/redis
+    container_name: redis
+    volumes:
+      - redisdata:/data
+      - /root/app/docker-elk//redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    networks: 
+      elk:
+        ipv4_address: 172.25.0.7
+    command: "redis-server /usr/local/etc/redis/redis.conf"
+    restart: always
+
 volumes:
   esdata:
+    driver: local
+  mysqldata:
+    driver: local
+  redisdata:
     driver: local
 
 networks:

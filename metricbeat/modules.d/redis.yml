@@ -3,7 +3,7 @@
   period: 10s
 
   # Redis hosts
-  hosts: ["127.0.0.1:6379"]
+  hosts: ["localhost:6379"]
 
   # Timeout after which time a metricset should return an error
   # Timeout is by default defined as period, as a fetch of a metricset

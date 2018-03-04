@@ -12,6 +12,7 @@
 - Metricbeat Docker 监听
 - Metricbeat Nginx 监听
 - Metricbeat Mysql 监听
+- Metricbeat Redis 监听
 - Metricbeat NodeJs 监听
 - Metricbeat Golang 监听
 - Metricbeat Kubernetes 监听
@@ -83,10 +84,12 @@ $ pwd
 - Metricbeat System 监听
 - Metricbeat Docker 监听
 - Metricbeat Nginx 监听
+- Metricbeat Mysql 监听
+- Metricbeat Redis 监听
 
 ### TODO
 
-- Metricbeat Mysql 监听
+
 - Metricbeat NodeJs 监听
 - Metricbeat Golang 监听
 - Metricbeat Kubernetes 监听
