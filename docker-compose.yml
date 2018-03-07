@@ -122,7 +122,6 @@ services:
       - redisdata:/data
       - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
-      -
     ports:
       - "6379:6379"
     networks: 
