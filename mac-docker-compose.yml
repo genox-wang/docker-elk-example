@@ -26,9 +26,10 @@ services:
     container_name: logstash
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/config/pipeline.yml:/usr/share/logstash/config/pipeline.yml:ro
+      - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
       - /private/var/log:/hostlog:ro
+      - ./mariadb/log:/host/log/mysql:ro
     ports:
       - "5000:5000"
     environment:
@@ -97,8 +98,10 @@ services:
     container_name: mysql
     volumes:
       - mysqldata:/var/lib/mysql
-      - ./conf.d:/etc/mysql/conf.d:ro
+      - ./mariadb/conf.d:/etc/mysql/conf.d:ro
+      - ./mariadb/my.cnf:/etc/mysql/my.cnf:ro
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+      - ./mariadb/log:/var/log/mysql
     ports:
       - "3306:3306"
     networks:
