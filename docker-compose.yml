@@ -103,6 +103,7 @@ services:
       - mysqldata:/var/lib/mysql
       - ./mariadb/conf.d:/etc/mysql/conf.d:ro
       - ./mariadb/my.cnf:/etc/mysql/my.cnf:ro
+      - ./mariadb/log:/var/log/mysql
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
     ports:
       - "3306:3306"

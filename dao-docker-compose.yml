@@ -24,7 +24,8 @@ services:
     - /root/app/docker-elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
     - /root/app/docker-elk/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
     - /root/app/docker-elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
-    - /var/log:/hostlog:ro
+    - mysqllog:/xlogs/mysqllog:ro
+    - /var/log:/xlogs/hostlog:ro
     ports:
     - 5000:5000
     environment:
@@ -95,6 +96,7 @@ services:
       - mysqldata:/var/lib/mysql
       - /root/app/docker-elk/mariadb/conf.d:/etc/mysql/conf.d:ro
       - /root/app/docker-elk/mariadb/my.cnf:/etc/mysql/my.cnf:ro
+      - mysqllog:/var/log/mysql
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
     ports:
       - "3306:3306"
@@ -124,6 +126,8 @@ volumes:
   esdata:
     driver: local
   mysqldata:
+    driver: local
+  mysqllog:
     driver: local
   redisdata:
     driver: local
