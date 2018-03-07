@@ -22,7 +22,7 @@ services:
     container_name: logstash
     volumes:
     - /root/app/docker-elk/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-    - /root/app/docker-elk/logstash/config/pipeline.yml:/usr/share/logstash/config/pipeline.yml:ro
+    - /root/app/docker-elk/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
     - /root/app/docker-elk/logstash/pipeline:/usr/share/logstash/pipeline:ro
     - /var/log:/hostlog:ro
     ports:

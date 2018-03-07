@@ -26,7 +26,7 @@ services:
     container_name: logstash
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
-      - ./logstash/config/pipeline.yml:/usr/share/logstash/config/pipeline.yml:ro
+      - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
       - /private/var/log:/hostlog:ro
     ports:
