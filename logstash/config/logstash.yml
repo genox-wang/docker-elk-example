@@ -8,9 +8,9 @@ xpack.monitoring.elasticsearch.password: "123456"
 # * pipeline id 必须要在这里注册
 # * 至少要有配置一个管道
 
-xpack.management.enabled: true
-xpack.management.elasticsearch.url: "http://elasticsearch:9200/"
-xpack.management.elasticsearch.username: elastic
-xpack.management.elasticsearch.password: "123456"
-xpack.management.logstash.poll_interval: 5s
-xpack.management.pipeline.id: ["var.log.system","main"]
+# xpack.management.enabled: true
+# xpack.management.elasticsearch.url: "http://elasticsearch:9200/"
+# xpack.management.elasticsearch.username: elastic
+# xpack.management.elasticsearch.password: "123456"
+# xpack.management.logstash.poll_interval: 5s
+# xpack.management.pipeline.id: ["var.log.system", "main", "mysql.show"]

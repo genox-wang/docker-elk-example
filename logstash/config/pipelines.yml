@@ -2,5 +2,7 @@
 # For more information on multiple pipelines, see the documentation:
 #   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html
 
-# - pipeline.id: main
-#   path.config: "/usr/share/logstash/pipeline"
+- pipeline.id: var.log.system
+  path.config: "/usr/share/logstash/pipeline/var.log.system.conf"
+- pipeline.id: mysql.slow
+  path.config: "/usr/share/logstash/pipeline/mysql.slow.conf"
