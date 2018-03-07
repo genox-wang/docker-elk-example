@@ -120,14 +120,12 @@ services:
     container_name: redis
     volumes:
       - redisdata:/data
-      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
     ports:
       - "6379:6379"
     networks: 
       elk:
         ipv4_address: 172.25.0.7
-    command: "/usr/local/etc/redis/redis.conf"
     restart: always
 
 
