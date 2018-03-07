@@ -28,7 +28,7 @@ services:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-      - /private/var/log:/hostlog:ro
+      - mysqllog:/xlogs/mysqllog:ro
     ports:
       - "5000:5000"
     environment:
@@ -61,12 +61,13 @@ services:
       context: metricbeat/
     container_name: metricbeat
     volumes:
-      - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
-      - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - /proc:/hostfs/proc:ro
       - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
-      - /:/hostfs:ro 
+      - /:/hostfs:ro
+      - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
     user: "root"
     network_mode: host
@@ -74,7 +75,6 @@ services:
       - elasticsearch
       - kibana
       - logstash
-    command: "-system.hostfs=/hostfs -e"
     restart: always
   
   nginx:
@@ -103,8 +103,8 @@ services:
       - mysqldata:/var/lib/mysql
       - ./mariadb/conf.d:/etc/mysql/conf.d:ro
       - ./mariadb/my.cnf:/etc/mysql/my.cnf:ro
-      - ./mariadb/log:/var/log/mysql
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
+      - mysqllog:/var/log/mysql
     ports:
       - "3306:3306"
     networks:
@@ -120,7 +120,6 @@ services:
     container_name: redis
     volumes:
       - redisdata:/data
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
     ports:
       - "6379:6379"
@@ -130,13 +129,17 @@ services:
     command: "redis-server /usr/local/etc/redis/redis.conf"
     restart: always
 
+
 volumes:
   esdata:
     driver: local
   mysqldata:
     driver: local
+  mysqllog:
+    driver: local
   redisdata:
     driver: local
+  
 
 networks:
   elk:

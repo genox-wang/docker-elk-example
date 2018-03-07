@@ -28,8 +28,7 @@ services:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
       - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro
       - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
-      - /private/var/log:/hostlog:ro
-      - ./mariadb/log:/host/log/mysql:ro
+      - mysqllog:/xlogs/mysqllog:ro
     ports:
       - "5000:5000"
     environment:
@@ -101,7 +100,7 @@ services:
       - ./mariadb/conf.d:/etc/mysql/conf.d:ro
       - ./mariadb/my.cnf:/etc/mysql/my.cnf:ro
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
-      - ./mariadb/log:/var/log/mysql
+      - mysqllog:/var/log/mysql
     ports:
       - "3306:3306"
     networks:
@@ -117,7 +116,6 @@ services:
     container_name: redis
     volumes:
       - redisdata:/data
-      - ./redis.conf:/usr/local/etc/redis/redis.conf
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
     ports:
       - "6379:6379"
@@ -132,6 +130,8 @@ volumes:
   esdata:
     driver: local
   mysqldata:
+    driver: local
+  mysqllog:
     driver: local
   redisdata:
     driver: local
