@@ -67,7 +67,6 @@ services:
       - /:/hostfs:ro
       - ./metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
       - ./metricbeat/modules.d:/usr/share/metricbeat/modules.d:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
       -  /usr/share/zoneinfo/Asia/Shanghai:/etc/localtime:ro
     user: "root"
     network_mode: host
@@ -75,6 +74,7 @@ services:
       - elasticsearch
       - kibana
       - logstash
+    command: -system.hostfs=/hostfs -e
     restart: always
   
   nginx:
