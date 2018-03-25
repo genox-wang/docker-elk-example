@@ -85,6 +85,9 @@ $ pwd
 
 ### Change List
 
+- v1.1.1
+  - 修复 redis 崩溃 bug
+
 - v1.1.0
   - 暂时去除 DaoCloud Stack 脚本更新，专注 docker-compose
   - 新增 mariadb 监控支持
@@ -113,3 +116,4 @@ $ pwd
 - Metricbeat Kubernetes 监听
 - X-pack 权限解析
 - ELK 集群
+- 新增 filebeat 支持
