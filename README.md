@@ -80,6 +80,15 @@ $ pwd
 #### 初始账户
 
 > 初始账号 elastic 密码 123456 修改密码在 `docker-compose.yml` 里修改 `ELASTIC_PASSWORD: 123456`， 其他账号密码可在 kibana 里修改
+> **初始密码修改后请同步修改 `./metricbeat/metricbeat.yml`*
+```
+output.elasticsearch:
+
+  ...
+
+  username: "elastic"
+  password: "<your password>"
+```
 
 
 
